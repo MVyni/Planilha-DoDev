@@ -11,11 +11,20 @@ const jwt = new JWT({
     scopes: SCOPES,
 });
 
+const doc =  new GoogleSpreadsheet (arquivo.id, jwt)
 
 async function GetDoc(){
-    const doc =  new GoogleSpreadsheet (arquivo.id, jwt)
     doc.loadInfo();
     return doc;
 }
 
-GetDoc();
+
+async function ReadWorkSheet() {
+    const firstSheet = doc.sheetsByIndex[0];
+    const rows = await firstSheet.getRows();
+    rows.toObject();
+    return rows;
+    
+}
+
+ReadWorkSheet();
