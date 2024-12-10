@@ -20,11 +20,12 @@ async function GetDoc(){
 
 
 async function ReadWorkSheet() {
+    await doc.loadInfo();
     const firstSheet = doc.sheetsByIndex[0];
     const rows = await firstSheet.getRows();
-    rows.toObject();
-    return rows;
     
+    const list = rows.map((e) => {e.toObject()});
+    return list;
 }
 
 ReadWorkSheet();
