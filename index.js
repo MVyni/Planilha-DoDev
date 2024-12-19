@@ -11,17 +11,16 @@ const jwt = new JWT({
     scopes: SCOPES,
 });
 
-const doc =  new GoogleSpreadsheet (arquivo.id, jwt)
 
 async function GetDoc(){
+    const doc =  new GoogleSpreadsheet (arquivo.id, jwt)
     doc.loadInfo();
     return doc;
 }
 
 
 async function ReadWorkSheet() {
-    await doc.loadInfo();
-    const firstSheet = doc.sheetsByIndex[0];
+    const firstSheet = (await GetDoc()).sheetsByIndex[0];
     const rows = await firstSheet.getRows();
     
     const list = rows.map((e) => {e.toObject()});
@@ -46,4 +45,4 @@ async function TrackData(){
         console.log(response);
     })
     return console.log("Dados copiados com sucesso.");
-}
+}   
